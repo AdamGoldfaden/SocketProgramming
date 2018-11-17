@@ -1,0 +1,11 @@
+# SocketProgramming
+
+Project Description: In this assignment, I created a client program that connects to a central AWS-style server via a TCP socket connection.  The client sends this server 3 values: a link id, a file size, and a signal power value and asks the server to find a value for a total delay (propogation + transmission) using shannon's theorem with relevant link information associated with the link id.  The central AWS server then queries 2 backend servers via UDP socket connections and asks them to search two separate text files for link information associated with the value of the link id that the AWS server received from the client.  If the backend servers have a match in their associated text file, they send the relevant link information back to the AWS via a UDP socket connection.  Upon receiving this information, the AWS then tasks a third server, by sending relevant values via a UDP socket connection, with calculating the total delay requested by the client.  Once this third server completes that calculation using shannon's theorem to find the link capacity to use for the transmission delay, it sends this delay value back to the AWS using a UDP socket connection.  The AWS lastly sends the delay value back to the client via the original TCP socket connection but also opens up a TCP connection with a monitor program that prints out all three delay values to the display.
+
+Message Exchange Format: For this project, every time I needed to send a value across a connection, I simply casted it to a char*, as specified by the manual pages for send() and recv(), and basically sent each value one at a time using a the same amount of send()'s and recv()'s on the associated programs.  
+
+Project idiosyncrasies/failures: As far as I can tell, the only issues I've seen with my code are when the the client sends fairly low values for the singal power like < -200 dbm.  Other than that, I hope it works fine.  
+
+Reused Code: As you'll see in my comments, a good portion of my code is take directly from beej:  basically any time I needed to set up a socket I used the examples beej had in his guide.  Other than that, the only code I used from an outside source came from a stackoverflow post about rounding a float to 2 decimal places.
+
+To whomever is reading this, I hope you have a lovely day! -AG
